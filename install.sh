@@ -73,7 +73,7 @@ install_dependencies() {
     esac
 }
 
-#This function will be called when user installed x-ui out of sercurity
+#This function will be called when user installed x-ui out of security
 config_after_install() {
     echo -e "${yellow}安装/更新已完成！为了安全起见，建议修改面板设置 ${plain}"
     read -p "是否要继续修改 [y/n]? ": config_confirm

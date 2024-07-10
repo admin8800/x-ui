@@ -135,7 +135,7 @@ func (t *Tgbot) OnReceive() {
 		isAdmin := checkAdmin(tgId)
 		if update.Message == nil {
 			if update.CallbackQuery != nil {
-				t.asnwerCallback(update.CallbackQuery)
+				t.answerCallback(update.CallbackQuery)
 			}
 		} else {
 			if update.Message.IsCommand() {
@@ -196,7 +196,7 @@ func (t *Tgbot) answerCommand(message *tgbotapi.Message, chatId int64, isAdmin b
 	t.SendAnswer(chatId, msg, isAdmin)
 }
 
-func (t *Tgbot) asnwerCallback(callbackQuery *tgbotapi.CallbackQuery) {
+func (t *Tgbot) answerCallback(callbackQuery *tgbotapi.CallbackQuery) {
 	// Respond to the callback query, telling Telegram to show the user
 	// a message with the data received.
 	callback := tgbotapi.NewCallback(callbackQuery.ID, callbackQuery.Data)
@@ -424,14 +424,14 @@ func (t *Tgbot) UserLoginNotify(username string, ip string, time string, status 
 func (t *Tgbot) getInboundUsages() string {
 	info := ""
 	// get traffic
-	inbouds, err := t.inboundService.GetAllInbounds()
+	inbounds, err := t.inboundService.GetAllInbounds()
 	if err != nil {
 		logger.Warning("GetAllInbounds run failed:", err)
 		info += t.I18nBot("tgbot.answers.getInboundsFailed")
 	} else {
 		// NOTE:If there no any sessions here,need to notify here
 		// TODO:Sub-node push, automatic conversion format
-		for _, inbound := range inbouds {
+		for _, inbound := range inbounds {
 			info += t.I18nBot("tgbot.messages.inbound", "Remark=="+inbound.Remark)
 			info += t.I18nBot("tgbot.messages.port", "Port=="+strconv.Itoa(inbound.Port))
 			info += t.I18nBot("tgbot.messages.traffic", "Total=="+common.FormatTraffic((inbound.Up+inbound.Down)), "Upload=="+common.FormatTraffic(inbound.Up), "Download=="+common.FormatTraffic(inbound.Down))
@@ -539,7 +539,7 @@ func (t *Tgbot) searchClient(chatId int64, email string) {
 }
 
 func (t *Tgbot) searchInbound(chatId int64, remark string) {
-	inbouds, err := t.inboundService.SearchInbounds(remark)
+	inbounds, err := t.inboundService.SearchInbounds(remark)
 	if err != nil {
 		logger.Warning(err)
 		msg := t.I18nBot("tgbot.wentWrong")
@@ -547,13 +547,13 @@ func (t *Tgbot) searchInbound(chatId int64, remark string) {
 		return
 	}
 
-	if len(inbouds) == 0 {
+	if len(inbounds) == 0 {
 		msg := t.I18nBot("tgbot.noInbounds")
 		t.SendMsgToTgbot(chatId, msg)
 		return
 	}
 
-	for _, inbound := range inbouds {
+	for _, inbound := range inbounds {
 		info := ""
 		info += t.I18nBot("tgbot.messages.inbound", "Remark=="+inbound.Remark)
 		info += t.I18nBot("tgbot.messages.port", "Port=="+strconv.Itoa(inbound.Port))
