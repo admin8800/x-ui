@@ -21,6 +21,7 @@ import (
 	"github.com/xtls/xray-core/proxy/vless"
 	"github.com/xtls/xray-core/proxy/vmess"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 type XrayAPI struct {
@@ -34,7 +35,7 @@ func (x *XrayAPI) Init(apiPort int) (err error) {
 	if apiPort == 0 {
 		return common.NewError("xray api port wrong:", apiPort)
 	}
-	x.grpcClient, err = grpc.Dial(fmt.Sprintf("127.0.0.1:%v", apiPort), grpc.WithInsecure())
+	x.grpcClient, err = grpc.NewClient(fmt.Sprintf("127.0.0.1:%v", apiPort), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return err
 	}
