@@ -372,15 +372,15 @@ show_status() {
     check_status
     case $? in
     0)
-        echo -e "面板状态: ${green}Running${plain}"
+        echo -e "面板状态: ${green}运行中${plain}"
         show_enable_status
         ;;
     1)
-        echo -e "面板状态: ${yellow}Not Running${plain}"
+        echo -e "面板状态: ${yellow}未运行${plain}"
         show_enable_status
         ;;
     2)
-        echo -e "面板状态: ${red}Not Installed${plain}"
+        echo -e "面板状态: ${red}未安装${plain}"
         ;;
     esac
     show_xray_status
@@ -389,9 +389,9 @@ show_status() {
 show_enable_status() {
     check_enabled
     if [[ $? == 0 ]]; then
-        echo -e "自动启动: ${green}Yes${plain}"
+        echo -e "开机自启: ${green}已启用${plain}"
     else
-        echo -e "自动启动: ${red}No${plain}"
+        echo -e "开机自启: ${red}未启用${plain}"
     fi
 }
 
@@ -407,9 +407,9 @@ check_xray_status() {
 show_xray_status() {
     check_xray_status
     if [[ $? == 0 ]]; then
-        echo -e "xray 状态: ${green}Running${plain}"
+        echo -e "xray 状态: ${green}运行中${plain}"
     else
-        echo -e "xray 状态: ${red}Not Running${plain}"
+        echo -e "xray 状态: ${red}未运行${plain}"
     fi
 }
 
@@ -490,7 +490,7 @@ ssl_cert_issue() {
         LOGD "请检查/root/.acme.sh目录"
         exit 1
     else
-        LOGI "您的域名现已准备好颁发证书..."
+        LOGI "您的域名已准备好颁发证书..."
     fi
 
     # create a directory for install cert
@@ -535,12 +535,12 @@ ssl_cert_issue() {
 
     ~/.acme.sh/acme.sh --upgrade --auto-upgrade
     if [ $? -ne 0 ]; then
-        LOGE "自动续订失败，证书详细信息:"
+        LOGE "自动续签失败，证书详细信息:"
         ls -lah cert/*
         chmod 755 $certPath/*
         exit 1
     else
-        LOGI "自动续订成功，证书详细信息:"
+        LOGI "自动续签成功，证书详细信息:"
         ls -lah cert/*
         chmod 755 $certPath/*
     fi
@@ -614,7 +614,7 @@ ssl_cert_issue_CF() {
             chmod 755 $certPath
             exit 1
         else
-            LOGI "证书安装完毕并开启自动续订，具体信息如下"
+            LOGI "证书安装完毕并开启自动续签，具体信息如下"
             ls -lah cert
             chmod 755 $certPath
         fi
@@ -661,7 +661,7 @@ open_ports() {
 
     # Check if the firewall is inactive
     if ufw status | grep -q "Status: active"; then
-        echo "防火墙已处于活动状态"
+        echo "防火墙已处于启用状态"
     else
         # Open the necessary ports
         ufw allow ssh
@@ -734,7 +734,7 @@ delete_ports() {
 }
 
 bbr_menu() {
-    echo -e "${green}\t1.${plain} 使用 BBR"
+    echo -e "${green}\t1.${plain} 启用 BBR"
     echo -e "${green}\t2.${plain} 禁用 BBR"
     echo -e "${green}\t0.${plain} 返回主菜单"
     read -p "Choose an option: " choice
@@ -892,8 +892,8 @@ show_usage() {
     echo "x-ui stop         - 停止"
     echo "x-ui restart      - 重启"
     echo "x-ui status       - 查看当前状态"
-    echo "x-ui enable       - 启用开机自动启动"
-    echo "x-ui disable      - 禁用开机自动启动"
+    echo "x-ui enable       - 启用开机自启"
+    echo "x-ui disable      - 禁用开机自启"
     echo "x-ui log          - 查看日志"
     echo "x-ui update       - 更新"
     echo "x-ui install      - 安装"
@@ -913,19 +913,19 @@ show_menu() {
   ${green}3.${plain} 切换版本
   ${green}4.${plain} 卸载
 ————————————————
-  ${green}5.${plain} 重置用户名和密码
+  ${green}5.${plain} 修改用户名和密码
   ${green}6.${plain} 重置面板设置
-  ${green}7.${plain} 设置面板端口
+  ${green}7.${plain} 修改面板端口
   ${green}8.${plain} 查看面板设置
 ————————————————
-  ${green}9.${plain} 启动
+  ${green}9.${plain}  启动
   ${green}10.${plain} 停止
   ${green}11.${plain} 重启
   ${green}12.${plain} 检查状态
   ${green}13.${plain} 检查日志
 ————————————————
-  ${green}14.${plain} 启用自动启动
-  ${green}15.${plain} 禁用自动启动
+  ${green}14.${plain} 启用开机自启
+  ${green}15.${plain} 禁用开机自启
 ————————————————
   ${green}16.${plain} SSL 证书管理
   ${green}17.${plain} Cloudflare SSL 证书
