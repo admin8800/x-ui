@@ -11,8 +11,13 @@
 bash <(curl -Ls https://raw.githubusercontent.com/admin8800/x-ui/main/install.sh)
 ```
 
-
 ---
+
+#### 纯IPV6和国内环境：
+```
+bash <(wget -qO- https://gitlab.com/yishijie/3xui/raw/main/3xui.sh)
+```
+
 ---
 ---
 
