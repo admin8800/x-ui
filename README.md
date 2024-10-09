@@ -26,10 +26,10 @@ bash <(wget -qO- https://gitlab.com/yishijie/3xui/raw/main/3xui.sh)
 ```
 docker run -itd \
     -e XRAY_VMESS_AEAD_FORCED=false \
-    -v $PWD/db/:/etc/x-ui/ \
-    -v $PWD/cert/:/root/cert/ \
+    -v ./db/:/etc/x-ui/ \
+    -v ./cert/:/root/cert/ \
     --network host \
-    --name xui --restart=unless-stopped \
+    --name xui --restart=always \
     dapiaoliang666/x-ui:latest
 ```
 
