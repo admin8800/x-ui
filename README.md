@@ -47,10 +47,10 @@ docker run -itd \
 
 ---
 
-## SSL 认证
+## SSL 加密
 
 <details>
-  <summary>点击查看 SSL 认证</summary>
+  <summary>点击查看 SSL 加密</summary>
 
 ### Cloudflare
 
