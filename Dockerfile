@@ -9,8 +9,7 @@ RUN go build -ldflags "-w -s" -o build/x-ui main.go
 RUN ./DockerInitFiles.sh "$TARGETARCH"
 
 FROM alpine
-LABEL org.opencontainers.image.authors="alireza7@gmail.com"
-ENV TZ=Asia/Tehran
+ENV TZ=Asia/Shanghai
 WORKDIR /app
 
 RUN apk add --no-cache ca-certificates tzdata libcap nftables
