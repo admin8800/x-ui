@@ -1,10 +1,8 @@
----
-
 services:
   xui:
-    image: alireza7/x-ui
+    image: admin8800/x-ui
     container_name: x-ui
-    hostname: yourhostname
+    hostname: hostname
     volumes:
       - $PWD/db/:/etc/x-ui/
       - $PWD/cert/:/root/cert/
